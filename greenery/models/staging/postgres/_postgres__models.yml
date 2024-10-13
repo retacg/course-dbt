@@ -1,0 +1,17 @@
+version: 1
+
+models:
+  - name: stg_postgres__addresses
+    description: Delivery addresses for orders 
+  - name: stg_postgres__events
+    description: Page events by browsing session on our platform
+  - name: stg_postgres__order_items
+    description: Orders with corresponding products and their unit numbers    
+  - name: stg_postgres__orders
+    description: Unique orders and their cost, status, and corresponding user, address, and promo information
+  - name: stg_postgres__products
+    description: Products and their name and inventory
+  - name: stg_postgres__promos
+    description: Promos and their discount and status
+  - name: stg_postgres__users
+    description: Unique users on platform and their corresponding personally identifying information
