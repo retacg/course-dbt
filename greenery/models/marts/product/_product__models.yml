@@ -1,0 +1,17 @@
+version: 1
+
+models:
+  - name: dim_product_pages
+    description: Summary information for all product pages
+    columns:
+      - name: page_url
+        tests:
+          - unique
+          - not_null
+  - name: fact_page_views
+    description: Page view and event information summarized by day
+    columns:
+      - name: session_id
+        tests:
+          - unique
+          - not_null

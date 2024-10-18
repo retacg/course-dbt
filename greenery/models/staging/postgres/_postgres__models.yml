@@ -2,16 +2,66 @@ version: 1
 
 models:
   - name: stg_postgres__addresses
-    description: Delivery addresses for orders 
+    description: Delivery addresses for orders
+    columns:
+      - name: address_id
+        tests:
+          - unique
+          - not_null
   - name: stg_postgres__events
     description: Page events by browsing session on our platform
+    columns:
+      - name: event_id
+        tests:
+          - unique
+          - not_null
+      - name: user_id
+        tests:
+          - relationships:
+              to: ref('stg_postgres__users')
+              field: user_id
+      - name: event_type
+        tests:
+          - accepted_values:
+              values:
+                - checkout
+                - package_shipped
+                - add_to_cart
+                - page_view
   - name: stg_postgres__order_items
-    description: Orders with corresponding products and their unit numbers    
+    description: Orders with corresponding products and their unit numbers
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: product_id
+        tests:
+          - not_null          
   - name: stg_postgres__orders
     description: Unique orders and their cost, status, and corresponding user, address, and promo information
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
   - name: stg_postgres__products
     description: Products and their name and inventory
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null    
   - name: stg_postgres__promos
     description: Promos and their discount and status
+    columns:
+      - name: promo_id
+        tests:
+          - unique
+          - not_null
   - name: stg_postgres__users
     description: Unique users on platform and their corresponding personally identifying information
+    columns:
+      - name: user_id
+        tests:
+          - unique
+          - not_null    
