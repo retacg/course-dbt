@@ -1,8 +1,24 @@
-version: 1
+version: 2
 
 models:
+  - name: int_order_items
+    description: Summary information for products by order
+    data_tests:
+      - dbt_expectations.expect_column_distinct_count_to_equal_other_table:
+          column_name: order_id
+          compare_model: ref("stg_postgres__order_items")
+          compare_column_name: order_id
+    columns:
+      - name: order_id
+        tests:
+          - not_null
   - name: int_orders_user_agg
     description: Summary information for orders by user
+    data_tests:
+      - dbt_expectations.expect_column_distinct_count_to_equal_other_table:
+          column_name: order_id
+          compare_model: ref("stg_postgres__orders")
+          compare_column_name: order_id
     columns:
       - name: order_id
         tests:
@@ -10,9 +26,32 @@ models:
           - not_null
   - name: int_session_events_agg
     description: Summary information for sessions
+    data_tests:
+      - dbt_expectations.expect_column_distinct_count_to_equal_other_table:
+          column_name: session_id
+          compare_model: ref("stg_postgres__events")
+          compare_column_name: session_id
     columns:
       - name: session_id
         tests:
           - unique
           - not_null
-
+  - name: int_session_products
+    description: Information about what products are being ordered during sessions
+    data_tests:
+      - dbt_expectations.expect_column_distinct_count_to_equal_other_table:
+          column_name: session_id
+          compare_model: ref("stg_postgres__events")
+          compare_column_name: session_id
+    columns:
+      - name: session_id
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+      - name: product_id
+        tests:
+          - not_null                     
+                

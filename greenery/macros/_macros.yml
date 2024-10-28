@@ -1,0 +1,23 @@
+version: 1
+
+macros:
+  - name: event_types
+    description: A macro to simplify creating aggregated columns by event type
+    docs:
+      show: true
+    arguments:
+      - name: table_name
+        type: string
+        description: name of the table with the event types
+      - name: column_name
+        type: string
+        description: set in the macro itself, the list of event types
+  - name: grant
+    description: A macro that writes the grant post hook after a model runs
+    docs:
+      show: true
+    arguments:
+      - name: role
+        type: string
+        description: name of the role you want to grant
+    

@@ -8,6 +8,10 @@ WITH order_promos AS (
     LEFT JOIN {{ ref('stg_postgres__promos') }} promos 
         on orders.promo_id=promos.promo_id 
 ),
+products AS (
+    SELECT * 
+    FROM {{ ref('stg_postgres__products') }} 
+),
 --We want to summarize key time-based session information at the page level
     user_session_time AS (
         SELECT
@@ -61,7 +65,7 @@ SELECT events.event_page_url
 ,SUM(CASE WHEN events.event_type='page_view' then 1 else 0 END) as page_views
 ,SUM(CASE WHEN events.event_type='add_to_cart' then 1 else 0 END) as add_to_carts
 ,SUM(CASE WHEN checkout_sessions.event_type='checkout' then 1 else 0 END) as checkouts
-,SUM(CASE WHEN checkout_sessions.event_type='package_shipped' then 1 else 0 END) as package_shipped
+,SUM(CASE WHEN checkout_sessions.event_type='package_shipped' then 1 else 0 END) as package_shippeds
 ,SUM(CASE WHEN checkout_sessions.order_id is not null then 1 else 0 END) AS orders
 ,SUM(order_promos.order_cost) as order_cost
 ,order_promos.promo_discount as order_promo_discount
@@ -71,7 +75,7 @@ SELECT events.event_page_url
 ,page_session_time_summary.median_page_view_seconds
 
 FROM events
-LEFT JOIN {{ ref('stg_postgres__products') }} products 
+LEFT JOIN products 
     ON events.product_id=products.product_id
 LEFT JOIN order_promos 
     ON events.order_id=order_promos.order_id

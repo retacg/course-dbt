@@ -33,7 +33,7 @@ events.session_id
 ,session_events_agg.page_views
 ,session_events_agg.add_to_carts
 ,session_events_agg.checkouts
-,session_events_agg.packages_shipped
+,session_events_agg.package_shippeds
 ,session_events_agg.orders
 ,DATEDIFF('minute',session_started_at,session_ended_at) AS session_length_minutes
 

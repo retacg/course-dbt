@@ -10,8 +10,20 @@ models:
           - not_null
   - name: fact_page_views
     description: Page view and event information summarized by day
+    data_tests:
+      - dbt_expectations.expect_column_distinct_count_to_equal_other_table:
+          column_name: session_id
+          compare_model: ref("stg_postgres__events")
+          compare_column_name: session_id      
     columns:
       - name: session_id
         tests:
           - unique
           - not_null
+  - name: fact_product_sessions
+    description: Summary information for sessions by product
+    columns:
+      - name: product_name
+        tests:
+          - unique
+          - not_null          
