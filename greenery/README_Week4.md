@@ -47,8 +47,3 @@ where inventory=0
 
 ## Part 2 
 I work in elections and did not have time to do this part of the project this week I will come back in my own time and work on it
-
-## Part 3
-Things that I am thinking about adopting at my organization are: integrating testing and test alerts into our workflow and leveraging dbt artifacts. We process a LOT of data and getting more test coverage our our data and setting up a more robust framework for alerting us when the data does not meet expectations could deliver a lot of value for our stakeholders. 
-
-Artifacts could also help us keep track of what datasets are powering our data visualizations and keep that information centralized and transparent. 
